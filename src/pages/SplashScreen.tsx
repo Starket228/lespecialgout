@@ -26,7 +26,7 @@ export default function SplashScreen() {
       <div className={`flex flex-col items-center transition-all duration-700 transform ${animationClass}`}>
         <div className="w-32 h-32 mb-8 relative">
           <img 
-            src="https://i.postimg.cc/tJb5ySf3/drapeau-togo.jpg"
+            src="https://i.postimg.cc/QM2JsQdJ/file-1.jpg"
             alt="Logo" 
             className="w-full h-full object-cover rounded-full shadow-lg"
           />
