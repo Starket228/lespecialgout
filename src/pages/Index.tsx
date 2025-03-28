@@ -112,7 +112,7 @@ export default function Index() {
       <Header showBanner={activeTab === 'home'} />
       
       {/* Main content */}
-      <main className="container mx-auto max-w-lg">
+      <main className="container mx-auto w-full max-w-7xl px-2 sm:px-4">
         {activeTab === 'home' && (
           <Home 
             favorites={favorites} 

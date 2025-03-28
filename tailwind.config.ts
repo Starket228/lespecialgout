@@ -20,6 +20,9 @@ export default {
       },
     },
     extend: {
+      screens: {
+        'xs': '480px',
+      },
       fontFamily: {
         poppins: ["Poppins", ...fontFamily.sans],
       },
