@@ -1,48 +1,44 @@
 
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useLocalStorage } from '../lib/hooks/useLocalStorage';
 
 export default function SplashScreen() {
   const navigate = useNavigate();
-  const [showSplash, setShowSplash] = useState(true);
-  const [isFirstVisit, setIsFirstVisit] = useLocalStorage('firstVisit', true);
-  
+  const [animationClass, setAnimationClass] = useState('opacity-0');
+
   useEffect(() => {
+    // Fade in animation
+    setTimeout(() => {
+      setAnimationClass('opacity-100 scale-100');
+    }, 100);
+
+    // Redirect after 3 seconds
     const timer = setTimeout(() => {
-      setShowSplash(false);
-      
-      // If first visit, go to onboarding, otherwise go to home
-      if (isFirstVisit) {
-        navigate('/onboarding');
-      } else {
-        navigate('/');
-      }
-    }, 2500);
-    
+      setAnimationClass('opacity-0 scale-110');
+      setTimeout(() => navigate('/home'), 500);
+    }, 3000);
+
     return () => clearTimeout(timer);
-  }, [navigate, isFirstVisit]);
-  
+  }, [navigate]);
+
   return (
-    <div className="fixed inset-0 bg-white flex items-center justify-center z-50">
-      <div className="flex flex-col items-center justify-center">
-        <div className="w-32 h-32 mb-6 relative animate-pulse">
+    <div className="fixed inset-0 flex items-center justify-center bg-white">
+      <div className={`flex flex-col items-center transition-all duration-700 transform ${animationClass}`}>
+        <div className="w-32 h-32 mb-8 relative">
           <img 
-            src="https://i.postimg.cc/QM2JsQdJ/file-1.jpg" 
-            alt="Le Spécial Goût Logo" 
-            className="w-full h-full object-contain"
+            src="https://i.postimg.cc/tJb5ySf3/drapeau-togo.jpg"
+            alt="Logo" 
+            className="w-full h-full object-cover rounded-full shadow-lg"
           />
+          <div className="absolute inset-0 border-4 border-primary rounded-full animate-pulse"></div>
         </div>
         
-        <h1 className="text-xl font-bold text-primary animate-fade-in">
+        <h1 className="text-3xl font-bold text-primary mb-3 flex items-center">
+          <span className="mr-2">🍽️</span>
           Le Spécial Goût
         </h1>
         
-        <div className="mt-8 flex space-x-2">
-          <div className="w-3 h-3 rounded-full bg-primary animate-bounce"></div>
-          <div className="w-3 h-3 rounded-full bg-primary animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-          <div className="w-3 h-3 rounded-full bg-primary animate-bounce" style={{ animationDelay: '0.4s' }}></div>
-        </div>
+        <p className="text-gray-600 text-sm">Découvrez les saveurs authentiques</p>
       </div>
     </div>
   );
