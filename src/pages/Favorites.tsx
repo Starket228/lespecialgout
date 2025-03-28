@@ -22,7 +22,7 @@ export default function Favorites({
       </h2>
       
       {favorites.length > 0 ? (
-        <div className="flex flex-col gap-4 p-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 p-3">
           {favorites.map(item => (
             <FoodItemCard
               key={item.id}

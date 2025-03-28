@@ -41,7 +41,7 @@ export default function Home({ favorites, onToggleFavorite, onAddToCart }: HomeP
         onSelectCategory={setActiveCategory}
       />
       
-      <div className="grid grid-cols-2 gap-4 px-3 mt-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 px-3 mt-6">
         {filteredItems.map(item => (
           <FoodItem
             key={item.id}

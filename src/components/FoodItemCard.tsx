@@ -60,8 +60,8 @@ export default function FoodItem({
   };
 
   return (
-    <div className="relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 group">
-      <div className="relative h-48 overflow-hidden">
+    <div className="relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 group h-full flex flex-col">
+      <div className="relative h-48 overflow-hidden sm:h-56">
         <img
           src={item.image}
           alt={item.name}
@@ -88,37 +88,37 @@ export default function FoodItem({
         />
       </button>
       
-      <div className="p-4">
-        <h3 className="font-semibold text-gray-800 truncate">{item.name}</h3>
-        <p className="text-sm text-gray-500 h-10 line-clamp-2 mt-1">{item.description}</p>
+      <div className="p-4 flex flex-col flex-grow">
+        <h3 className="font-semibold text-gray-800 text-base sm:text-lg truncate">{item.name}</h3>
+        <p className="text-xs sm:text-sm text-gray-500 h-8 sm:h-10 line-clamp-2 mt-1">{item.description}</p>
         
-        <div className="flex justify-between items-center mt-4">
-          <span className="font-bold text-primary">{item.price}</span>
+        <div className="flex justify-between items-center mt-auto pt-3">
+          <span className="font-bold text-primary text-sm sm:text-base">{item.price}</span>
           
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1 sm:gap-2">
             <button 
               onClick={decreaseQuantity}
-              className="h-8 w-8 flex items-center justify-center rounded-full bg-gray-100 text-gray-700 hover:bg-primary hover:text-white transition-colors"
+              className="h-7 w-7 sm:h-8 sm:w-8 flex items-center justify-center rounded-full bg-gray-100 text-gray-700 hover:bg-primary hover:text-white transition-colors"
             >
-              <Minus size={16} />
+              <Minus size={14} className="sm:size-16" />
             </button>
             
-            <span className="w-6 text-center font-medium">{quantity}</span>
+            <span className="w-5 sm:w-6 text-center font-medium">{quantity}</span>
             
             <button 
               onClick={increaseQuantity}
-              className="h-8 w-8 flex items-center justify-center rounded-full bg-primary text-white hover:bg-primary/90 transition-colors"
+              className="h-7 w-7 sm:h-8 sm:w-8 flex items-center justify-center rounded-full bg-primary text-white hover:bg-primary/90 transition-colors"
             >
-              <Plus size={16} />
+              <Plus size={14} className="sm:size-16" />
             </button>
           </div>
         </div>
         
         <button
           onClick={increaseQuantity}
-          className="mt-4 w-full flex items-center justify-center gap-2 py-2 rounded-lg bg-gray-100 hover:bg-primary hover:text-white transition-colors text-sm font-medium"
+          className="mt-3 w-full flex items-center justify-center gap-2 py-2 rounded-lg bg-gray-100 hover:bg-primary hover:text-white transition-colors text-xs sm:text-sm font-medium"
         >
-          <ShoppingCart size={16} />
+          <ShoppingCart size={14} className="sm:size-16" />
           Ajouter au panier
         </button>
       </div>
