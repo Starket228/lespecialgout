@@ -1,5 +1,6 @@
 
 import { X, User, ShoppingBag, HelpCircle, Settings, LogOut, Home, Star, Book } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 interface SideMenuProps {
   isOpen: boolean;
@@ -11,42 +12,50 @@ export default function SideMenu({ isOpen, onClose }: SideMenuProps) {
     { 
       icon: Home, 
       label: 'Accueil', 
-      description: 'Retourner à la page principale'
+      description: 'Retourner à la page principale',
+      path: '/'
     },
     { 
       icon: User, 
       label: 'Mon Profil', 
-      description: 'Gérer vos informations personnelles'
+      description: 'Gérer vos informations personnelles',
+      path: '/profile'
     },
     { 
       icon: ShoppingBag, 
       label: 'Mes Commandes', 
-      description: 'Suivre et consulter vos commandes'
+      description: 'Suivre et consulter vos commandes',
+      path: '/orders'
     },
     { 
       icon: Star, 
       label: 'Mes Favoris', 
-      description: 'Consulter vos plats préférés'
+      description: 'Consulter vos plats préférés',
+      path: '/favorites'
     },
     { 
       icon: Book, 
       label: 'Menu Complet', 
-      description: 'Découvrir tous nos plats disponibles'
+      description: 'Découvrir tous nos plats disponibles',
+      path: '/'
     },
     { 
       icon: HelpCircle, 
       label: 'Aide et Support', 
-      description: 'Besoin d\'aide? Contactez-nous'
+      description: 'Besoin d\'aide? Contactez-nous',
+      path: '/support'
     },
     { 
       icon: Settings, 
       label: 'Paramètres', 
-      description: 'Personnaliser votre expérience'
+      description: 'Personnaliser votre expérience',
+      path: '/settings'
     },
     { 
       icon: LogOut, 
       label: 'Déconnexion', 
-      description: 'Se déconnecter de votre compte'
+      description: 'Se déconnecter de votre compte',
+      path: '/logout'
     }
   ];
 
@@ -66,10 +75,10 @@ export default function SideMenu({ isOpen, onClose }: SideMenuProps) {
       >
         <div className="p-5 h-full flex flex-col">
           <div className="flex justify-between items-center mb-8">
-            <a href="#" className="text-xl font-bold text-primary flex items-center">
+            <Link to="/" className="text-xl font-bold text-primary flex items-center">
               <span className="mr-2">🍽️</span>
               Le Spécial Goût
-            </a>
+            </Link>
             <button
               className="flex items-center justify-center h-9 w-9 rounded-full hover:bg-gray-100 transition-colors"
               onClick={onClose}
@@ -82,9 +91,11 @@ export default function SideMenu({ isOpen, onClose }: SideMenuProps) {
             {menuItems.map((item, index) => {
               const Icon = item.icon;
               return (
-                <div
+                <Link
                   key={index}
+                  to={item.path}
                   className="flex flex-col py-4 px-3 border-b border-gray-100 cursor-pointer hover:bg-gray-50 transition-colors rounded-lg mb-1"
+                  onClick={onClose}
                 >
                   <div className="flex items-center gap-3">
                     <div className="p-2 rounded-full bg-primary/10">
@@ -95,7 +106,7 @@ export default function SideMenu({ isOpen, onClose }: SideMenuProps) {
                       <p className="text-xs text-gray-500 mt-1">{item.description}</p>
                     </div>
                   </div>
-                </div>
+                </Link>
               );
             })}
           </div>
