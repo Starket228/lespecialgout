@@ -21,8 +21,12 @@ function RegionCard({ name, description, onClick }: RegionCardProps) {
       <div className="absolute top-0 left-0 h-2 w-full bg-gradient-to-r from-red-500 via-yellow-500 to-green-500" />
       
       <div className="absolute top-0 right-0 p-2">
-        <div className="flex items-center justify-center w-10 h-10 bg-white rounded-full">
-          <span className="text-xl">🇹🇬</span>
+        <div className="flex items-center justify-center w-10 h-10 bg-white rounded-full overflow-hidden">
+          <img 
+            src="https://i.postimg.cc/tJb5ySf3/drapeau-togo.jpg" 
+            alt="Drapeau Togo" 
+            className="w-full h-full object-cover"
+          />
         </div>
       </div>
       
@@ -92,7 +96,13 @@ export default function Special({
         <div className="p-3">
           <div className="flex items-center justify-center mb-4">
             <h2 className="text-2xl font-bold text-center text-gray-800 flex items-center">
-              <span className="mr-2">🇹🇬</span>
+              <span className="mr-2 w-6 h-6 inline-block">
+                <img 
+                  src="https://i.postimg.cc/tJb5ySf3/drapeau-togo.jpg" 
+                  alt="Drapeau Togo" 
+                  className="w-full h-full object-cover rounded"
+                />
+              </span>
               Spécialités togolaises
             </h2>
           </div>
@@ -120,7 +130,13 @@ export default function Special({
           </button>
           
           <h2 className="text-xl font-semibold mb-4 flex items-center">
-            <span className="mr-2">🇹🇬</span>
+            <span className="mr-2 w-6 h-6 inline-block">
+              <img 
+                src="https://i.postimg.cc/tJb5ySf3/drapeau-togo.jpg" 
+                alt="Drapeau Togo" 
+                className="w-full h-full object-cover rounded"
+              />
+            </span>
             Région {regions.find(r => r.id === selectedRegion)?.name}
           </h2>
           

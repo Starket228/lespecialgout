@@ -11,7 +11,15 @@ export default function NavBar({ activeTab, onTabChange }: NavBarProps) {
   const navItems = [
     { id: 'home', label: 'Accueil', icon: Home },
     { id: 'courses', label: 'Courses', icon: ShoppingBag },
-    { id: 'special', label: 'Spécial', icon: () => <span className="text-xl">🇹🇬</span> },
+    { id: 'special', label: 'Spécial', icon: () => (
+      <div className="h-5 w-5 flex items-center justify-center">
+        <img 
+          src="https://i.postimg.cc/tJb5ySf3/drapeau-togo.jpg" 
+          alt="Drapeau Togo" 
+          className="w-full h-full object-cover rounded"
+        />
+      </div>
+    )},
     { id: 'favorites', label: 'Favoris', icon: Heart },
     { id: 'cart', label: 'Panier', icon: ShoppingCart }
   ];
