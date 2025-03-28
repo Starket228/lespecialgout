@@ -78,10 +78,36 @@ export default function Cart({
 
   const handleSubmitOrder = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Prepare the WhatsApp message with order details
+    let message = `*NOUVELLE COMMANDE*\n\n`;
+    message += `*Client:* ${formData.name}\n`;
+    message += `*Téléphone:* ${formData.phone}\n`;
+    message += `*Localisation:* ${formData.location}\n\n`;
+    message += `*Détails de la commande:*\n`;
+    
+    cartItems.forEach(item => {
+      message += `- ${item.quantity}x ${item.name} (${item.price})\n`;
+    });
+    
+    message += `\n*Total:* ${totalAmount} FCFA`;
+    
+    // Encode the message for the URL
+    const encodedMessage = encodeURIComponent(message);
+    
+    // Create WhatsApp URL with the phone number and message
+    const whatsappUrl = `https://wa.me/22879776522?text=${encodedMessage}`;
+    
+    // Open WhatsApp in a new tab
+    window.open(whatsappUrl, '_blank');
+    
+    // Show success toast
     toast({
       title: "Commande effectuée !",
-      description: "Votre commande a été enregistrée avec succès",
+      description: "Votre commande a été envoyée via WhatsApp",
     });
+    
+    // Reset form and hide checkout form
     setShowCheckoutForm(false);
     setFormData({ location: '', name: '', phone: '' });
   };
