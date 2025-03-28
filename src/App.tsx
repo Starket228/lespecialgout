@@ -11,7 +11,7 @@ import Profile from "./pages/Profile";
 import Orders from "./pages/Orders";
 import Support from "./pages/Support";
 import Logout from "./pages/Logout";
-import Cart from "./pages/Cart";
+import CartPage from "./pages/CartPage";
 
 const queryClient = new QueryClient();
 
@@ -27,7 +27,7 @@ const App = () => (
           <Route path="/profile" element={<Profile />} />
           <Route path="/orders" element={<Orders />} />
           <Route path="/support" element={<Support />} />
-          <Route path="/cart" element={<Cart />} />
+          <Route path="/cart" element={<CartPage />} />
           <Route path="/logout" element={<Logout />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
