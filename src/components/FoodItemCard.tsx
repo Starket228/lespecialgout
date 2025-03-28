@@ -110,7 +110,7 @@ export default function FoodItem({
             <div className="flex justify-between items-center">
               <span className="font-bold text-primary text-base sm:text-lg">{item.price}</span>
               
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1">
                 <button 
                   onClick={decreaseQuantity}
                   className="h-7 w-7 sm:h-8 sm:w-8 flex items-center justify-center rounded-full bg-gray-100 text-gray-700 hover:bg-primary hover:text-white transition-colors"
@@ -131,7 +131,7 @@ export default function FoodItem({
             
             <button
               onClick={increaseQuantity}
-              className="w-full flex items-center justify-center gap-1.5 sm:gap-2 py-1.5 sm:py-2 bg-gray-800 text-white hover:bg-gray-700 transition-all text-xs sm:text-sm font-medium whitespace-nowrap shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+              className="w-full flex items-center justify-center gap-1.5 sm:gap-2 py-1.5 sm:py-2 bg-primary text-gray-800 hover:bg-primary/90 transition-all text-xs sm:text-sm font-medium whitespace-nowrap shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
             >
               <ShoppingCart size={isMobile ? 14 : 16} />
               <span className="text-xs sm:text-sm">Ajouter au panier</span>
