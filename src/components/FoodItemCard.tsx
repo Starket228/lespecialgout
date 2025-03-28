@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Heart, ShoppingCart, Plus, Minus, Star, Clock, CircleDollarSign } from 'lucide-react';
 import { FoodItem as FoodItemType } from '../data/food-data';
@@ -7,6 +6,7 @@ import { cn } from '../lib/utils';
 import { Dialog, DialogContent } from '../components/ui/dialog';
 import { Button } from '../components/ui/button';
 import { Card, CardContent } from '../components/ui/card';
+import { useIsMobile } from '../hooks/use-mobile';
 
 interface FoodItemProps {
   item: FoodItemType;
@@ -24,16 +24,17 @@ export default function FoodItem({
   const [quantity, setQuantity] = useState(0);
   const [isLikeAnimating, setIsLikeAnimating] = useState(false);
   const [detailsOpen, setDetailsOpen] = useState(false);
+  const isMobile = useIsMobile();
 
   const handleLike = (e: React.MouseEvent) => {
-    e.stopPropagation(); // Prevent card click when clicking the like button
+    e.stopPropagation();
     setIsLikeAnimating(true);
     onToggleFavorite(item);
     setTimeout(() => setIsLikeAnimating(false), 500);
   };
 
   const increaseQuantity = (e: React.MouseEvent) => {
-    e.stopPropagation(); // Prevent card click when clicking this button
+    e.stopPropagation();
     const newQuantity = quantity + 1;
     setQuantity(newQuantity);
     onAddToCart(item, newQuantity);
@@ -45,7 +46,7 @@ export default function FoodItem({
   };
 
   const decreaseQuantity = (e: React.MouseEvent) => {
-    e.stopPropagation(); // Prevent card click when clicking this button
+    e.stopPropagation();
     if (quantity > 0) {
       const newQuantity = quantity - 1;
       setQuantity(newQuantity);
@@ -112,7 +113,7 @@ export default function FoodItem({
                   onClick={decreaseQuantity}
                   className="h-7 w-7 sm:h-8 sm:w-8 flex items-center justify-center rounded-full bg-gray-100 text-gray-700 hover:bg-primary hover:text-white transition-colors"
                 >
-                  <Minus size={16} />
+                  <Minus size={isMobile ? 14 : 16} />
                 </button>
                 
                 <span className="w-5 sm:w-6 text-center font-medium text-sm sm:text-base">{quantity}</span>
@@ -121,17 +122,17 @@ export default function FoodItem({
                   onClick={increaseQuantity}
                   className="h-7 w-7 sm:h-8 sm:w-8 flex items-center justify-center rounded-full bg-primary text-white hover:bg-primary/90 transition-colors"
                 >
-                  <Plus size={16} />
+                  <Plus size={isMobile ? 14 : 16} />
                 </button>
               </div>
             </div>
             
             <button
               onClick={increaseQuantity}
-              className="w-full flex items-center justify-center gap-2 py-2 rounded-lg bg-primary text-gray-800 hover:bg-primary/90 transition-all text-sm font-medium whitespace-nowrap shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+              className="w-full flex items-center justify-center gap-1.5 sm:gap-2 py-1.5 sm:py-2 rounded-lg bg-primary text-gray-800 hover:bg-primary/90 transition-all text-xs sm:text-sm font-medium whitespace-nowrap shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
             >
-              <ShoppingCart size={16} />
-              Ajouter au panier
+              <ShoppingCart size={isMobile ? 14 : 16} />
+              <span className="text-xs sm:text-sm">Ajouter au panier</span>
             </button>
           </div>
         </div>
@@ -139,7 +140,6 @@ export default function FoodItem({
 
       <Dialog open={detailsOpen} onOpenChange={setDetailsOpen}>
         <DialogContent className="sm:max-w-md p-0 overflow-hidden rounded-xl">
-          {/* Large product image */}
           <div className="relative h-56 sm:h-64 w-full">
             <img 
               src={item.image} 
@@ -147,7 +147,6 @@ export default function FoodItem({
               className="w-full h-full object-cover"
             />
             
-            {/* Favorite button on image */}
             <button 
               onClick={(e) => {
                 e.stopPropagation();
@@ -167,15 +166,12 @@ export default function FoodItem({
             </button>
           </div>
           
-          {/* Content area with orange header */}
           <div className="bg-white relative">
-            {/* Orange category tag */}
             <div className="absolute -top-3 left-4 px-3 py-1 bg-orange-500 text-white text-xs font-medium rounded-full">
               {item.category || "Featured"}
             </div>
             
             <div className="px-4 pt-6">
-              {/* Product name and rating */}
               <div className="flex justify-between items-start">
                 <h2 className="text-xl font-bold text-gray-900">{item.name}</h2>
                 <div className="flex items-center gap-1">
@@ -184,7 +180,6 @@ export default function FoodItem({
                 </div>
               </div>
               
-              {/* Stats row */}
               <div className="mt-4 flex justify-between">
                 <div className="flex items-center text-gray-600">
                   <Clock size={16} className="mr-1" />
@@ -203,13 +198,11 @@ export default function FoodItem({
                 </div>
               </div>
               
-              {/* Description */}
               <div className="mt-4">
                 <h3 className="text-md font-semibold text-gray-900">About Food</h3>
                 <p className="mt-1 text-sm text-gray-600">{item.description}</p>
               </div>
               
-              {/* Ingredients if available */}
               {item.ingredients && (
                 <div className="mt-4">
                   <h3 className="text-md font-semibold text-gray-900">Ingredients</h3>
@@ -217,7 +210,6 @@ export default function FoodItem({
                 </div>
               )}
               
-              {/* Add to cart button */}
               <div className="sticky bottom-0 left-0 right-0 py-4 mt-6 bg-white">
                 <Button 
                   className="w-full py-6 bg-orange-500 hover:bg-orange-600 text-white rounded-xl text-base font-medium"
