@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { Menu, Bell, X } from 'lucide-react';
 import SideMenu from './SideMenu';
+import NotificationModal from './NotificationModal';
 
 interface HeaderProps {
   showBanner: boolean;
@@ -9,6 +10,7 @@ interface HeaderProps {
 
 export default function Header({ showBanner }: HeaderProps) {
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
+  const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false);
 
   return (
     <>
@@ -25,7 +27,10 @@ export default function Header({ showBanner }: HeaderProps) {
           Le Spécial Goût
         </a>
         
-        <div className="relative flex items-center justify-center h-9 w-9 rounded-full hover:bg-primary/10 transition-colors">
+        <div 
+          className="relative flex items-center justify-center h-9 w-9 rounded-full hover:bg-primary/10 transition-colors"
+          onClick={() => setIsNotificationModalOpen(true)}
+        >
           <Bell size={24} className="text-primary cursor-pointer" />
           <span className="absolute -top-1 -right-1 bg-secondary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center animate-pulse">
             1
@@ -36,6 +41,11 @@ export default function Header({ showBanner }: HeaderProps) {
       <SideMenu 
         isOpen={isSideMenuOpen} 
         onClose={() => setIsSideMenuOpen(false)} 
+      />
+      
+      <NotificationModal 
+        isOpen={isNotificationModalOpen}
+        onClose={() => setIsNotificationModalOpen(false)}
       />
     </>
   );

@@ -13,6 +13,8 @@ import Support from "./pages/Support";
 import Logout from "./pages/Logout";
 import CartPage from "./pages/CartPage";
 import Admin from "./pages/Admin";
+import SplashScreen from "./pages/SplashScreen";
+import Onboarding from "./pages/Onboarding";
 
 const queryClient = new QueryClient();
 
@@ -23,7 +25,9 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Index />} />
+          <Route path="/" element={<SplashScreen />} />
+          <Route path="/home" element={<Index />} />
+          <Route path="/onboarding" element={<Onboarding />} />
           <Route path="/special" element={<SpecialWrapper />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/orders" element={<Orders />} />
