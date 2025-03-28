@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 import { FoodItem } from '../data/food-data';
-import FoodItem from '../components/FoodItem';
+import FoodItemCard from '../components/FoodItem';  // Renamed component import
 import { X } from 'lucide-react';
 
 interface FavoritesProps {
@@ -24,7 +24,7 @@ export default function Favorites({
       {favorites.length > 0 ? (
         <div className="flex flex-col gap-4 p-3">
           {favorites.map(item => (
-            <FoodItem
+            <FoodItemCard
               key={item.id}
               item={item}
               isFavorite={true}

@@ -4,7 +4,7 @@ import { Search } from 'lucide-react';
 import { courseItems, courseCategories } from '../data/food-data';
 import { FoodItem } from '../data/food-data';
 import CategoryList from '../components/CategoryList';
-import FoodItem from '../components/FoodItem';
+import FoodItemCard from '../components/FoodItem';  // Renamed component import
 
 interface CoursesProps {
   favorites: FoodItem[];
@@ -53,7 +53,7 @@ export default function Courses({
       
       <div className="grid grid-cols-2 gap-4 px-3 mt-4">
         {filteredItems.map(item => (
-          <FoodItem
+          <FoodItemCard
             key={item.id}
             item={item}
             isFavorite={favorites.some(fav => fav.id === item.id)}

@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { togoleseSpecialties } from '../data/food-data';
 import { FoodItem } from '../data/food-data';
-import FoodItem from '../components/FoodItem';
+import FoodItemCard from '../components/FoodItem';  // Renamed component import
 import { ArrowLeft } from 'lucide-react';
 
 interface MenuItemProps {
@@ -164,7 +164,7 @@ export default function Menu({
           {selectedCategory === 'togolese' ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {filteredItems.map(item => (
-                <FoodItem
+                <FoodItemCard
                   key={item.id}
                   item={item}
                   isFavorite={favorites.some(fav => fav.id === item.id)}
