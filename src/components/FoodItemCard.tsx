@@ -107,26 +107,28 @@ export default function FoodItem({
           {/* Removed description from card view */}
           
           <div className="mt-auto space-y-3">
-            <div className="flex justify-between items-center">
+            {/* Price on its own line */}
+            <div className="text-center">
               <span className="font-bold text-primary text-base sm:text-lg">{item.price}</span>
+            </div>
+            
+            {/* Counter buttons below price */}
+            <div className="flex items-center justify-center gap-1">
+              <button 
+                onClick={decreaseQuantity}
+                className="h-7 w-7 sm:h-8 sm:w-8 flex items-center justify-center rounded-full bg-gray-100 text-gray-700 hover:bg-primary hover:text-white transition-colors"
+              >
+                <Minus size={isMobile ? 14 : 16} />
+              </button>
               
-              <div className="flex items-center gap-1">
-                <button 
-                  onClick={decreaseQuantity}
-                  className="h-7 w-7 sm:h-8 sm:w-8 flex items-center justify-center rounded-full bg-gray-100 text-gray-700 hover:bg-primary hover:text-white transition-colors"
-                >
-                  <Minus size={isMobile ? 14 : 16} />
-                </button>
-                
-                <span className="w-5 sm:w-6 text-center font-medium text-sm sm:text-base">{quantity}</span>
-                
-                <button 
-                  onClick={increaseQuantity}
-                  className="h-7 w-7 sm:h-8 sm:w-8 flex items-center justify-center rounded-full bg-primary text-white hover:bg-primary/90 transition-colors"
-                >
-                  <Plus size={isMobile ? 14 : 16} />
-                </button>
-              </div>
+              <span className="w-5 sm:w-6 text-center font-medium text-sm sm:text-base">{quantity}</span>
+              
+              <button 
+                onClick={increaseQuantity}
+                className="h-7 w-7 sm:h-8 sm:w-8 flex items-center justify-center rounded-full bg-primary text-white hover:bg-primary/90 transition-colors"
+              >
+                <Plus size={isMobile ? 14 : 16} />
+              </button>
             </div>
             
             <button
