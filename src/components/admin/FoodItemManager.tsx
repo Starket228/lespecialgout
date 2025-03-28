@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/components/ui/use-toast';
@@ -40,7 +39,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Pencil, Trash, Plus, Eye } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Card, CardContent } from '@/components/ui/card';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { Pencil, Trash, Plus, Eye, Utensils, Check } from 'lucide-react';
 
 interface FoodItemManagerProps {
   foodItems: any[];
@@ -64,6 +67,7 @@ export default function FoodItemManager({ foodItems, categories }: FoodItemManag
   const [isPreviewDialogOpen, setIsPreviewDialogOpen] = useState(false);
   const [previewFoodItem, setPreviewFoodItem] = useState<any>(null);
   const [loading, setLoading] = useState(false);
+  const isMobile = useIsMobile();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, isEdit = false) => {
     const { name, value } = e.target;
@@ -217,6 +221,7 @@ export default function FoodItemManager({ foodItems, categories }: FoodItemManag
             value={item.name}
             onChange={(e) => handleInputChange(e, isEdit)}
             placeholder="Nom du plat"
+            className="border-primary/30 focus-visible:ring-primary"
           />
         </div>
         
@@ -229,6 +234,7 @@ export default function FoodItemManager({ foodItems, categories }: FoodItemManag
             onChange={(e) => handleInputChange(e, isEdit)}
             placeholder="Description du plat"
             rows={3}
+            className="border-primary/30 focus-visible:ring-primary"
           />
         </div>
         
@@ -242,6 +248,7 @@ export default function FoodItemManager({ foodItems, categories }: FoodItemManag
             placeholder="Prix"
             type="number"
             step="0.01"
+            className="border-primary/30 focus-visible:ring-primary"
           />
         </div>
         
@@ -253,6 +260,7 @@ export default function FoodItemManager({ foodItems, categories }: FoodItemManag
             value={item.image}
             onChange={(e) => handleInputChange(e, isEdit)}
             placeholder="https://exemple.com/image.jpg"
+            className="border-primary/30 focus-visible:ring-primary"
           />
         </div>
         
@@ -262,7 +270,10 @@ export default function FoodItemManager({ foodItems, categories }: FoodItemManag
             value={item.category}
             onValueChange={(value) => handleSelectChange(value, 'category', isEdit)}
           >
-            <SelectTrigger id={`category-${isEdit ? 'edit' : 'new'}`}>
+            <SelectTrigger 
+              id={`category-${isEdit ? 'edit' : 'new'}`}
+              className="border-primary/30 focus:ring-primary"
+            >
               <SelectValue placeholder="Sélectionner une catégorie" />
             </SelectTrigger>
             <SelectContent>
@@ -294,28 +305,31 @@ export default function FoodItemManager({ foodItems, categories }: FoodItemManag
 
   return (
     <div className="space-y-4">
-      <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-semibold">Gestion des Plats</h2>
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 bg-gradient-to-r from-primary/10 to-transparent p-4 rounded-lg">
+        <h2 className="text-xl md:text-2xl font-semibold flex items-center gap-2">
+          <Utensils className="h-5 w-5 text-primary" />
+          <span>Gestion des Plats</span>
+        </h2>
         
         <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
           <DialogTrigger asChild>
-            <Button className="flex items-center gap-1">
+            <Button className="flex items-center gap-1 w-full sm:w-auto shadow-sm">
               <Plus size={16} />
               <span>Ajouter un plat</span>
             </Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-[550px]">
+          <DialogContent className="sm:max-w-[550px] max-h-[90vh] overflow-auto">
             <DialogHeader>
               <DialogTitle>Ajouter un nouveau plat</DialogTitle>
             </DialogHeader>
             <div className="py-4">
               {renderFoodItemForm(false)}
             </div>
-            <DialogFooter>
-              <Button variant="outline" onClick={() => setIsAddDialogOpen(false)}>
+            <DialogFooter className="flex-col sm:flex-row gap-2">
+              <Button variant="outline" onClick={() => setIsAddDialogOpen(false)} className="w-full sm:w-auto">
                 Annuler
               </Button>
-              <Button onClick={handleAddFoodItem} disabled={loading}>
+              <Button onClick={handleAddFoodItem} disabled={loading} className="w-full sm:w-auto">
                 {loading ? 'Ajout en cours...' : 'Ajouter'}
               </Button>
             </DialogFooter>
@@ -323,136 +337,232 @@ export default function FoodItemManager({ foodItems, categories }: FoodItemManag
         </Dialog>
       </div>
 
-      <div className="overflow-hidden border rounded-lg">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Nom</TableHead>
-              <TableHead>Catégorie</TableHead>
-              <TableHead className="text-right">Prix</TableHead>
-              <TableHead className="text-center">Spécial</TableHead>
-              <TableHead className="w-32 text-right">Actions</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {foodItems.length === 0 ? (
-              <TableRow>
-                <TableCell colSpan={5} className="text-center py-4">
-                  Aucun plat trouvé. Ajoutez votre premier plat.
-                </TableCell>
-              </TableRow>
-            ) : (
-              foodItems.map((item) => (
-                <TableRow key={item.id}>
-                  <TableCell className="font-medium">{item.name}</TableCell>
-                  <TableCell>{item.category}</TableCell>
-                  <TableCell className="text-right">{item.price.toFixed(2)} €</TableCell>
-                  <TableCell className="text-center">
-                    {item.is_special ? "Oui" : "Non"}
-                  </TableCell>
-                  <TableCell className="text-right">
-                    <div className="flex justify-end space-x-2">
-                      <Button
-                        variant="outline"
-                        size="icon"
-                        onClick={() => {
-                          setPreviewFoodItem(item);
-                          setIsPreviewDialogOpen(true);
-                        }}
-                      >
-                        <Eye size={16} />
-                      </Button>
-                      
-                      <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-                        <DialogTrigger asChild>
-                          <Button
-                            variant="outline"
-                            size="icon"
-                            onClick={() => setEditFoodItem({...item, price: item.price.toString()})}
-                          >
-                            <Pencil size={16} />
-                          </Button>
-                        </DialogTrigger>
-                        {editFoodItem && editFoodItem.id === item.id && (
-                          <DialogContent className="sm:max-w-[550px]">
-                            <DialogHeader>
-                              <DialogTitle>Modifier le plat</DialogTitle>
-                            </DialogHeader>
-                            <div className="py-4">
-                              {renderFoodItemForm(true)}
-                            </div>
-                            <DialogFooter>
-                              <Button variant="outline" onClick={() => setIsEditDialogOpen(false)}>
-                                Annuler
-                              </Button>
-                              <Button onClick={handleUpdateFoodItem} disabled={loading}>
-                                {loading ? 'Mise à jour...' : 'Mettre à jour'}
-                              </Button>
-                            </DialogFooter>
-                          </DialogContent>
+      {isMobile ? (
+        <div className="space-y-4">
+          {foodItems.length === 0 ? (
+            <div className="text-center py-8 bg-muted/30 rounded-lg">
+              <p className="text-muted-foreground">Aucun plat trouvé. Ajoutez votre premier plat.</p>
+            </div>
+          ) : (
+            <ScrollArea className="h-[500px]">
+              <div className="grid grid-cols-1 gap-4 p-1">
+                {foodItems.map((item) => (
+                  <Card key={item.id} className="overflow-hidden shadow-md hover:shadow-lg transition-all">
+                    <div className="flex items-center justify-between p-3 bg-gradient-to-r from-muted/50 to-transparent border-b">
+                      <h3 className="font-semibold">{item.name}</h3>
+                      <div className="flex gap-1">
+                        {item.is_special && (
+                          <Badge variant="outline" className="bg-green-100 text-green-800">Spécial</Badge>
                         )}
-                      </Dialog>
-
-                      <AlertDialog>
-                        <AlertDialogTrigger asChild>
-                          <Button variant="destructive" size="icon">
-                            <Trash size={16} />
-                          </Button>
-                        </AlertDialogTrigger>
-                        <AlertDialogContent>
-                          <AlertDialogHeader>
-                            <AlertDialogTitle>Êtes-vous sûr ?</AlertDialogTitle>
-                            <AlertDialogDescription>
-                              Cette action supprimera définitivement le plat "{item.name}".
-                              Cette action ne peut pas être annulée.
-                            </AlertDialogDescription>
-                          </AlertDialogHeader>
-                          <AlertDialogFooter>
-                            <AlertDialogCancel>Annuler</AlertDialogCancel>
-                            <AlertDialogAction 
-                              onClick={() => handleDeleteFoodItem(item.id)}
-                              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-                            >
-                              Supprimer
-                            </AlertDialogAction>
-                          </AlertDialogFooter>
-                        </AlertDialogContent>
-                      </AlertDialog>
+                        <Badge variant="outline" className="bg-blue-100 text-blue-800">{item.price.toFixed(2)} €</Badge>
+                      </div>
                     </div>
+                    <CardContent className="p-0">
+                      <div className="p-3 text-sm">
+                        <p className="text-gray-600 line-clamp-2">{item.description}</p>
+                        <p className="mt-2 text-sm font-semibold text-muted-foreground">{item.category}</p>
+                      </div>
+                      <div className="flex justify-end gap-2 p-3 border-t bg-gradient-to-r from-transparent to-muted/20">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => {
+                            setPreviewFoodItem(item);
+                            setIsPreviewDialogOpen(true);
+                          }}
+                          className="h-8 w-8 p-0"
+                        >
+                          <Eye size={14} />
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => {
+                            setEditFoodItem({...item, price: item.price.toString()});
+                            setIsEditDialogOpen(true);
+                          }}
+                          className="h-8 w-8 p-0"
+                        >
+                          <Pencil size={14} />
+                        </Button>
+                        <AlertDialog>
+                          <AlertDialogTrigger asChild>
+                            <Button variant="destructive" size="sm" className="h-8 w-8 p-0">
+                              <Trash size={14} />
+                            </Button>
+                          </AlertDialogTrigger>
+                          <AlertDialogContent className="max-w-[90vw]">
+                            <AlertDialogHeader>
+                              <AlertDialogTitle>Êtes-vous sûr ?</AlertDialogTitle>
+                              <AlertDialogDescription>
+                                Cette action supprimera définitivement le plat "{item.name}".
+                              </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                              <AlertDialogCancel>Annuler</AlertDialogCancel>
+                              <AlertDialogAction 
+                                onClick={() => handleDeleteFoodItem(item.id)}
+                                className="bg-destructive text-destructive-foreground"
+                              >
+                                Supprimer
+                              </AlertDialogAction>
+                            </AlertDialogFooter>
+                          </AlertDialogContent>
+                        </AlertDialog>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </ScrollArea>
+          )}
+        </div>
+      ) : (
+        <div className="overflow-hidden border rounded-lg shadow-md">
+          <Table>
+            <TableHeader className="bg-muted/30">
+              <TableRow>
+                <TableHead>Nom</TableHead>
+                <TableHead>Catégorie</TableHead>
+                <TableHead className="text-right">Prix</TableHead>
+                <TableHead className="text-center">Spécial</TableHead>
+                <TableHead className="w-32 text-right">Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {foodItems.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={5} className="text-center py-4">
+                    Aucun plat trouvé. Ajoutez votre premier plat.
                   </TableCell>
                 </TableRow>
-              ))
-            )}
-          </TableBody>
-        </Table>
-      </div>
+              ) : (
+                foodItems.map((item) => (
+                  <TableRow key={item.id} className="hover:bg-muted/10 transition-colors">
+                    <TableCell className="font-medium">{item.name}</TableCell>
+                    <TableCell>
+                      <Badge variant="outline" className="bg-muted/30">{item.category}</Badge>
+                    </TableCell>
+                    <TableCell className="text-right font-semibold">{item.price.toFixed(2)} €</TableCell>
+                    <TableCell className="text-center">
+                      {item.is_special ? (
+                        <span className="inline-flex items-center text-green-600">
+                          <Check size={16} className="mr-1" /> Oui
+                        </span>
+                      ) : "Non"}
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <div className="flex justify-end space-x-2">
+                        <Button
+                          variant="outline"
+                          size="icon"
+                          onClick={() => {
+                            setPreviewFoodItem(item);
+                            setIsPreviewDialogOpen(true);
+                          }}
+                          className="hover:bg-muted/20"
+                        >
+                          <Eye size={16} />
+                        </Button>
+                        
+                        <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
+                          <DialogTrigger asChild>
+                            <Button
+                              variant="outline"
+                              size="icon"
+                              onClick={() => setEditFoodItem({...item, price: item.price.toString()})}
+                              className="hover:bg-muted/20"
+                            >
+                              <Pencil size={16} />
+                            </Button>
+                          </DialogTrigger>
+                          {editFoodItem && editFoodItem.id === item.id && (
+                            <DialogContent className="sm:max-w-[550px] max-h-[90vh] overflow-auto">
+                              <DialogHeader>
+                                <DialogTitle>Modifier le plat</DialogTitle>
+                              </DialogHeader>
+                              <div className="py-4">
+                                {renderFoodItemForm(true)}
+                              </div>
+                              <DialogFooter className="flex-col sm:flex-row gap-2">
+                                <Button variant="outline" onClick={() => setIsEditDialogOpen(false)} className="w-full sm:w-auto">
+                                  Annuler
+                                </Button>
+                                <Button onClick={handleUpdateFoodItem} disabled={loading} className="w-full sm:w-auto">
+                                  {loading ? 'Mise à jour...' : 'Mettre à jour'}
+                                </Button>
+                              </DialogFooter>
+                            </DialogContent>
+                          )}
+                        </Dialog>
+
+                        <AlertDialog>
+                          <AlertDialogTrigger asChild>
+                            <Button variant="destructive" size="icon">
+                              <Trash size={16} />
+                            </Button>
+                          </AlertDialogTrigger>
+                          <AlertDialogContent>
+                            <AlertDialogHeader>
+                              <AlertDialogTitle>Êtes-vous sûr ?</AlertDialogTitle>
+                              <AlertDialogDescription>
+                                Cette action supprimera définitivement le plat "{item.name}".
+                                Cette action ne peut pas être annulée.
+                              </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                              <AlertDialogCancel>Annuler</AlertDialogCancel>
+                              <AlertDialogAction 
+                                onClick={() => handleDeleteFoodItem(item.id)}
+                                className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                              >
+                                Supprimer
+                              </AlertDialogAction>
+                            </AlertDialogFooter>
+                          </AlertDialogContent>
+                        </AlertDialog>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
+            </TableBody>
+          </Table>
+        </div>
+      )}
 
       {/* Preview Dialog */}
       <Dialog open={isPreviewDialogOpen} onOpenChange={setIsPreviewDialogOpen}>
-        <DialogContent className="sm:max-w-[550px]">
+        <DialogContent className="sm:max-w-[550px] max-h-[90vh] overflow-auto">
           <DialogHeader>
             <DialogTitle>Aperçu du plat</DialogTitle>
           </DialogHeader>
           {previewFoodItem && (
             <div className="py-4 space-y-4">
-              <div className="rounded-md overflow-hidden w-full h-64">
+              <div className="rounded-md overflow-hidden w-full h-48 sm:h-64 shadow-md">
                 <img 
                   src={previewFoodItem.image} 
                   alt={previewFoodItem.name} 
                   className="w-full h-full object-cover"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.src = "https://placehold.co/600x400/orange/white?text=Image+non+disponible";
+                  }}
                 />
               </div>
               <div>
                 <h3 className="text-xl font-semibold">{previewFoodItem.name}</h3>
-                <div className="flex justify-between items-center mt-1">
-                  <span className="text-sm bg-primary text-white px-2 py-0.5 rounded">
+                <div className="flex flex-wrap justify-between items-center mt-1 gap-2">
+                  <Badge variant="outline" className="bg-blue-100 text-blue-800">
                     {previewFoodItem.category}
-                  </span>
-                  <span className="font-semibold">{previewFoodItem.price.toFixed(2)} €</span>
+                  </Badge>
+                  <span className="font-semibold text-lg">{previewFoodItem.price.toFixed(2)} €</span>
                 </div>
                 <p className="mt-2 text-gray-600">{previewFoodItem.description}</p>
                 {previewFoodItem.is_special && (
-                  <p className="mt-2 text-green-600 font-medium">✓ Plat spécial</p>
+                  <p className="mt-2 text-green-600 font-medium flex items-center gap-1">
+                    <Check size={16} /> Plat spécial
+                  </p>
                 )}
               </div>
             </div>
