@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Heart, ShoppingCart, Plus, Minus, Star, Clock, CircleDollarSign } from 'lucide-react';
 import { FoodItem as FoodItemType } from '../data/food-data';
@@ -102,7 +103,8 @@ export default function FoodItem({
         
         <div className="p-4 flex flex-col flex-grow bg-white rounded-b-2xl">
           <h3 className="font-semibold text-gray-800 text-base sm:text-lg truncate group-hover:text-primary transition-colors">{item.name}</h3>
-          <p className="text-xs sm:text-sm text-gray-500 mt-1 mb-3 line-clamp-2">{item.description}</p>
+          
+          {/* Removed description from card view */}
           
           <div className="mt-auto space-y-3">
             <div className="flex justify-between items-center">
@@ -129,7 +131,7 @@ export default function FoodItem({
             
             <button
               onClick={increaseQuantity}
-              className="w-full flex items-center justify-center gap-1.5 sm:gap-2 py-1.5 sm:py-2 rounded-lg bg-primary text-gray-800 hover:bg-primary/90 transition-all text-xs sm:text-sm font-medium whitespace-nowrap shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+              className="w-full flex items-center justify-center gap-1.5 sm:gap-2 py-1.5 sm:py-2 bg-gray-800 text-white hover:bg-gray-700 transition-all text-xs sm:text-sm font-medium whitespace-nowrap shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
             >
               <ShoppingCart size={isMobile ? 14 : 16} />
               <span className="text-xs sm:text-sm">Ajouter au panier</span>
@@ -167,7 +169,7 @@ export default function FoodItem({
           </div>
           
           <div className="bg-white relative">
-            <div className="absolute -top-3 left-4 px-3 py-1 bg-orange-500 text-white text-xs font-medium rounded-full">
+            <div className="absolute -top-3 left-4 px-3 py-1 bg-primary text-gray-800 text-xs font-medium rounded-full">
               {item.category || "Featured"}
             </div>
             
@@ -212,7 +214,7 @@ export default function FoodItem({
               
               <div className="sticky bottom-0 left-0 right-0 py-4 mt-6 bg-white">
                 <Button 
-                  className="w-full py-6 bg-orange-500 hover:bg-orange-600 text-white rounded-xl text-base font-medium"
+                  className="w-full py-6 bg-primary hover:bg-primary/90 text-gray-800 rounded-xl text-base font-medium"
                   onClick={(e) => {
                     e.stopPropagation();
                     increaseQuantity(e);
