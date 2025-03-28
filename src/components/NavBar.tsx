@@ -1,5 +1,5 @@
 
-import { Home, ShoppingBag, Menu as MenuIcon, Heart, ShoppingCart } from 'lucide-react';
+import { Home, ShoppingBag, Heart, ShoppingCart } from 'lucide-react';
 import { cn } from '../lib/utils';
 
 interface NavBarProps {
@@ -11,7 +11,7 @@ export default function NavBar({ activeTab, onTabChange }: NavBarProps) {
   const navItems = [
     { id: 'home', label: 'Accueil', icon: Home },
     { id: 'courses', label: 'Courses', icon: ShoppingBag },
-    { id: 'menu', label: 'Menu', icon: MenuIcon },
+    { id: 'special', label: 'Spécial', icon: () => <span className="text-xl">🇹🇬</span> },
     { id: 'favorites', label: 'Favoris', icon: Heart },
     { id: 'cart', label: 'Panier', icon: ShoppingCart }
   ];

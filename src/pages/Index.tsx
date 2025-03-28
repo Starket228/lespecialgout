@@ -11,7 +11,7 @@ import NavBar from '../components/NavBar';
 import Home from './Home';
 import Favorites from './Favorites';
 import Courses from './Courses';
-import Menu from './Menu';
+import Special from './Special';
 import Cart from './Cart';
 import CartPopup from '../components/CartPopup';
 
@@ -137,8 +137,8 @@ export default function Index() {
           />
         )}
         
-        {activeTab === 'menu' && (
-          <Menu 
+        {activeTab === 'special' && (
+          <Special 
             favorites={favorites} 
             onToggleFavorite={handleToggleFavorite} 
             onAddToCart={handleAddToCart} 
