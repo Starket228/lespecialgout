@@ -76,7 +76,7 @@ export default function Special({
     {
       id: 'Savanes',
       name: 'des Savanes',
-      description: 'Dégustez les recettes ancestrales de l'extrême nord',
+      description: "Dégustez les recettes ancestrales de l'extrême nord",
     }
   ];
 
