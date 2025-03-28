@@ -128,7 +128,7 @@ export default function FoodItem({
             
             <button
               onClick={increaseQuantity}
-              className="w-full flex items-center justify-center gap-2 py-2 rounded-lg bg-gray-100 hover:bg-primary hover:text-white transition-colors text-sm font-medium"
+              className="w-full flex items-center justify-center gap-2 py-2 rounded-lg bg-primary text-gray-800 hover:bg-primary/90 transition-all text-sm font-medium whitespace-nowrap shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
             >
               <ShoppingCart size={16} />
               Ajouter au panier
