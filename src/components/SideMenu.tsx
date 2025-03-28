@@ -1,5 +1,5 @@
 
-import { X, User, ShoppingBag, MapPin, CreditCard, HelpCircle, Settings, LogOut } from 'lucide-react';
+import { X, User, ShoppingBag, HelpCircle, Settings, LogOut, Home, Star, Book } from 'lucide-react';
 
 interface SideMenuProps {
   isOpen: boolean;
@@ -8,13 +8,46 @@ interface SideMenuProps {
 
 export default function SideMenu({ isOpen, onClose }: SideMenuProps) {
   const menuItems = [
-    { icon: User, label: 'Mon Profil' },
-    { icon: ShoppingBag, label: 'Mes Commandes' },
-    { icon: MapPin, label: 'Adresses de Livraison' },
-    { icon: CreditCard, label: 'Moyens de Paiement' },
-    { icon: HelpCircle, label: 'Aide et Support' },
-    { icon: Settings, label: 'Paramètres' },
-    { icon: LogOut, label: 'Déconnexion' }
+    { 
+      icon: Home, 
+      label: 'Accueil', 
+      description: 'Retourner à la page principale'
+    },
+    { 
+      icon: User, 
+      label: 'Mon Profil', 
+      description: 'Gérer vos informations personnelles'
+    },
+    { 
+      icon: ShoppingBag, 
+      label: 'Mes Commandes', 
+      description: 'Suivre et consulter vos commandes'
+    },
+    { 
+      icon: Star, 
+      label: 'Mes Favoris', 
+      description: 'Consulter vos plats préférés'
+    },
+    { 
+      icon: Book, 
+      label: 'Menu Complet', 
+      description: 'Découvrir tous nos plats disponibles'
+    },
+    { 
+      icon: HelpCircle, 
+      label: 'Aide et Support', 
+      description: 'Besoin d\'aide? Contactez-nous'
+    },
+    { 
+      icon: Settings, 
+      label: 'Paramètres', 
+      description: 'Personnaliser votre expérience'
+    },
+    { 
+      icon: LogOut, 
+      label: 'Déconnexion', 
+      description: 'Se déconnecter de votre compte'
+    }
   ];
 
   return (
@@ -45,16 +78,23 @@ export default function SideMenu({ isOpen, onClose }: SideMenuProps) {
             </button>
           </div>
           
-          <div className="mt-5 flex-1">
+          <div className="mt-5 flex-1 overflow-y-auto">
             {menuItems.map((item, index) => {
               const Icon = item.icon;
               return (
                 <div
                   key={index}
-                  className="flex items-center gap-3 py-4 px-2 border-b border-gray-100 cursor-pointer hover:bg-gray-50 transition-colors"
+                  className="flex flex-col py-4 px-3 border-b border-gray-100 cursor-pointer hover:bg-gray-50 transition-colors rounded-lg mb-1"
                 >
-                  <Icon size={20} className="text-gray-500" />
-                  <span className="text-gray-700">{item.label}</span>
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 rounded-full bg-primary/10">
+                      <Icon size={18} className="text-primary" />
+                    </div>
+                    <div>
+                      <span className="text-gray-800 font-medium">{item.label}</span>
+                      <p className="text-xs text-gray-500 mt-1">{item.description}</p>
+                    </div>
+                  </div>
                 </div>
               );
             })}
