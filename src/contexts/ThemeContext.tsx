@@ -20,6 +20,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     
     root.classList.remove('light', 'dark');
     root.classList.add(theme);
+    
+    // This ensures the theme persists across all pages
+    localStorage.setItem('theme', theme);
   }, [theme]);
 
   // Check system preference on mount
