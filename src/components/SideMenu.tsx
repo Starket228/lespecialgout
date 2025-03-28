@@ -1,5 +1,5 @@
 
-import { X, User, ShoppingBag, HelpCircle, Settings, LogOut, Home, Star, Book } from 'lucide-react';
+import { X, User, ShoppingBag, HelpCircle, LogOut } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 interface SideMenuProps {
@@ -9,12 +9,6 @@ interface SideMenuProps {
 
 export default function SideMenu({ isOpen, onClose }: SideMenuProps) {
   const menuItems = [
-    { 
-      icon: Home, 
-      label: 'Accueil', 
-      description: 'Retourner à la page principale',
-      path: '/'
-    },
     { 
       icon: User, 
       label: 'Mon Profil', 
@@ -28,28 +22,10 @@ export default function SideMenu({ isOpen, onClose }: SideMenuProps) {
       path: '/orders'
     },
     { 
-      icon: Star, 
-      label: 'Mes Favoris', 
-      description: 'Consulter vos plats préférés',
-      path: '/favorites'
-    },
-    { 
-      icon: Book, 
-      label: 'Menu Complet', 
-      description: 'Découvrir tous nos plats disponibles',
-      path: '/'
-    },
-    { 
       icon: HelpCircle, 
       label: 'Aide et Support', 
       description: 'Besoin d\'aide? Contactez-nous',
       path: '/support'
-    },
-    { 
-      icon: Settings, 
-      label: 'Paramètres', 
-      description: 'Personnaliser votre expérience',
-      path: '/settings'
     },
     { 
       icon: LogOut, 
@@ -115,9 +91,13 @@ export default function SideMenu({ isOpen, onClose }: SideMenuProps) {
             <div className="bg-primary/10 rounded-lg p-4">
               <h3 className="font-medium text-primary mb-2">Commande rapide</h3>
               <p className="text-sm text-gray-600 mb-3">Commandez vos plats préférés en quelques clics</p>
-              <button className="w-full py-2 rounded-lg bg-primary text-white font-medium text-sm hover:bg-primary/90 transition-colors">
+              <Link 
+                to="/cart" 
+                onClick={onClose}
+                className="block w-full py-2 rounded-lg bg-primary text-white font-medium text-sm hover:bg-primary/90 transition-colors text-center"
+              >
                 Commander maintenant
-              </button>
+              </Link>
             </div>
           </div>
         </div>

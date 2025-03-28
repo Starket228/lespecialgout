@@ -10,8 +10,8 @@ import SpecialWrapper from "./pages/SpecialWrapper";
 import Profile from "./pages/Profile";
 import Orders from "./pages/Orders";
 import Support from "./pages/Support";
-import Settings from "./pages/Settings";
 import Logout from "./pages/Logout";
+import Cart from "./pages/Cart";
 
 const queryClient = new QueryClient();
 
@@ -27,7 +27,7 @@ const App = () => (
           <Route path="/profile" element={<Profile />} />
           <Route path="/orders" element={<Orders />} />
           <Route path="/support" element={<Support />} />
-          <Route path="/settings" element={<Settings />} />
+          <Route path="/cart" element={<Cart />} />
           <Route path="/logout" element={<Logout />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
