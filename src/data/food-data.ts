@@ -7,6 +7,8 @@ export interface FoodItem {
   image: string;
   category: string;
   region?: string;
+  ingredients?: string;
+  calories?: string;
 }
 
 export const foodItems: FoodItem[] = [
