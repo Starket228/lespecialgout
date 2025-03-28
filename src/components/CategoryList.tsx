@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { cn } from '../lib/utils';
 
 interface CategoryListProps {
   categories: string[];
@@ -15,15 +15,16 @@ export default function CategoryList({
   className = ''
 }: CategoryListProps) {
   return (
-    <div className={`flex overflow-x-auto py-3 px-2 no-scrollbar ${className}`}>
+    <div className={cn("flex overflow-x-auto py-3 px-2 no-scrollbar gap-2", className)}>
       {categories.map((category) => (
         <button
           key={category}
-          className={`px-4 py-2 rounded-full text-sm whitespace-nowrap mr-3 transition-colors duration-200 flex-shrink-0 shadow-sm ${
-            category === activeCategory
-              ? 'bg-primary text-white font-medium'
-              : 'bg-white text-gray-700'
-          }`}
+          className={cn(
+            "px-4 py-2.5 rounded-full text-sm whitespace-nowrap flex-shrink-0 transition-all duration-300",
+            category === activeCategory 
+              ? "bg-primary text-white font-medium shadow-md shadow-primary/20 scale-105" 
+              : "bg-white text-gray-700 hover:bg-gray-100"
+          )}
           onClick={() => onSelectCategory(category)}
         >
           {category}

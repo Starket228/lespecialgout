@@ -27,9 +27,13 @@ export default function Home({ favorites, onToggleFavorite, onAddToCart }: HomeP
     <div className="pb-24">
       <Banner />
       
-      <h2 className="text-lg font-semibold ml-4 mt-4 text-primary">
-        Nos Menus
-      </h2>
+      <div className="px-4 mt-6 mb-2">
+        <h2 className="text-xl font-bold text-gray-800 flex items-center">
+          <span className="w-1.5 h-5 bg-primary rounded-full inline-block mr-2"></span>
+          Nos Menus
+        </h2>
+        <p className="text-sm text-gray-500 mt-1">Découvrez notre sélection de plats délicieux</p>
+      </div>
       
       <CategoryList 
         categories={categories}
@@ -37,7 +41,7 @@ export default function Home({ favorites, onToggleFavorite, onAddToCart }: HomeP
         onSelectCategory={setActiveCategory}
       />
       
-      <div className="grid grid-cols-2 gap-4 px-3 mt-4">
+      <div className="grid grid-cols-2 gap-4 px-3 mt-6">
         {filteredItems.map(item => (
           <FoodItem
             key={item.id}
